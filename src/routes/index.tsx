@@ -1,26 +1,6 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import routes from './routesConfig';
-import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
-import { IRoute } from '@/types/router';
-// import { isLogin } from '@/utils/userLogin';
-
-const RouteDecorator = (props: { route: IRoute }) => {
-  const { route } = props;
-  // const navigate = useNavigate();
-
-  useEffect(() => {
-    // if (route.meta?.requireAuth) {
-    //   if (!isLogin()) {
-    //     navigate('/login', { state: { redirect: route.pathname } });
-    //   }
-    // }
-
-    route.beforeCreate && route.beforeCreate(route);
-    return () => route.beforeDestroy && route.beforeDestroy(route);
-  }, [route]);
-
-  return <route.component />;
-};
+import { Route, Routes, Navigate } from 'react-router-dom';
 
 const RouterComponent: FC = () => (
   <Routes>
@@ -30,7 +10,7 @@ const RouterComponent: FC = () => (
       <Route
         key={route.pathname}
         path={route.pathname}
-        element={<RouteDecorator route={route} />}
+        element={<route.component />}
       />
     ))}
   </Routes>

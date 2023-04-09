@@ -15,12 +15,9 @@ import { useIntl } from 'react-intl'
 import { Header } from './Header/Header';
 import { Footer } from './Footer/Footer';
 import { HEADER_HEIGHT } from './Header/Header.styles';
-import { UiComponent } from '../data';
 
 interface LayoutProps {
-  children: React.ReactNode;
   noHeader?: boolean;
-  data: UiComponent[];
 }
 
 const THEME_KEY = 'mantine-color-scheme';
@@ -31,7 +28,7 @@ const rtlCache = createEmotionCache({
   stylisPlugins: [rtlPlugin],
 });
 
-export default function LayoutWrapper({ children, noHeader = false, data }: LayoutProps) {
+export default function LayoutWrapper({ noHeader = false }: LayoutProps) {
   const navigate = useNavigate()
   const intl = useIntl()
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -86,12 +83,6 @@ export default function LayoutWrapper({ children, noHeader = false, data }: Layo
     ['mod+L', toggleDir],
   ]);
 
-  const actions: SpotlightAction[] = data?.map((item) => ({
-    title: item.component,
-    description: item.attributes.title,
-    onTrigger: () => navigate(`/component/${item.slug}`),
-  }));
-
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider
@@ -115,7 +106,7 @@ export default function LayoutWrapper({ children, noHeader = false, data }: Layo
         emotionCache={dir === 'rtl' ? rtlCache : undefined}
       >
         <SpotlightProvider
-          actions={actions || []}
+          actions={[]}
           searchIcon={<IconSearch size="1.1rem" />}
           searchPlaceholder="Search components"
           shortcut={['mod + K', 'mod + P', '/']}

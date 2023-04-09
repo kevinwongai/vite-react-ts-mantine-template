@@ -5,8 +5,6 @@ import react from '@vitejs/plugin-react';
 import { viteMockServe } from 'vite-plugin-mock';
 import { visualizer } from 'rollup-plugin-visualizer';
 
-import path from 'path';
-
 // https://vitejs.dev/config/
 export default defineConfig(({ command }: ConfigEnv) => {
   return {
@@ -21,13 +19,7 @@ export default defineConfig(({ command }: ConfigEnv) => {
         logger: false, 
         supportTs: true
       }),
-      !!process.env.REPORT
-        ? visualizer({
-            open: true,
-            gzipSize: true,
-            filename: path.resolve(__dirname, 'dist/stats.html')
-          })
-        : null
+      visualizer()
     ],
     resolve: {
       alias: [
@@ -38,12 +30,6 @@ export default defineConfig(({ command }: ConfigEnv) => {
       ]
     },
     build: {
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true
-        }
-      },
       outDir: 'dist',
       assetsDir: 'assets'
     }

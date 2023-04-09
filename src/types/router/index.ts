@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { RouteProps } from 'react-router-dom';
 
 export type IRoute = {
   // Path
@@ -19,4 +18,4 @@ export type IRoute = {
     navigation: string;
     requireAuth: boolean;
   };
-} & RouteProps;
+}
